@@ -1,32 +1,27 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+// App.tsx
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import LoginScreen from '@/screens/LoginScreen';
+import HomePage from '@/screens/homePage/HomePage';
+import LoginScreen from '@/screens/LoginPage/LoginScreen'
 
-export default function HomeScreen() {
+export type RootStackParamList = {
+  Home: undefined;
+  Login: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+export default function App() {
   return (
-   <LoginScreen/>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home"
+       screenOptions={{ headerShown: false }} 
+      >
+        <Stack.Screen name="Home" component={HomePage} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});

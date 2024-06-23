@@ -6,12 +6,24 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+
+    "jsx": "react",
+    "jsxFactory": "React.createElement", // optionnel, dépend de la version de React que vous utilisez
+    "jsxFragmentFactory": "React.Fragment", // optionnel, dépend de la version de React que vous utilisez
+    "allowJs": true, // permet de compiler les fichiers JavaScript
+    "resolveJsonModule": true, // permet de charger les fichiers JSON
+    "isolatedModules": true, // requis pour les projets utilisant Babel
+    "skipLibCheck": true // optionnel, pour ignorer les vérifications de type dans les fichiers de déclaration de bibliothèque
+
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
