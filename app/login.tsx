@@ -3,6 +3,10 @@ import { Input } from '@/components/Input';
 import { Colors } from '@/constants/Colors';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@/app/index';
+
 
 export default function LoginScreen() {
     const [isWrongId, setIsWrongId] = useState<boolean>(false);
@@ -15,13 +19,16 @@ export default function LoginScreen() {
     const realVehiculeID = 'alexandre';
     const realVehiculePassword = '1234';
 
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+
 
     const handleSubmit = () => {
         setIsWrongId(false);
         setIsWrongPassword(false);
         setErrorID('');
         setErrorPassword('');
-    
+        navigation.navigate('HomePage');
         if (vehicleID === '') {
             setIsWrongId(true);
             setErrorID('Vehicle ID is required');
