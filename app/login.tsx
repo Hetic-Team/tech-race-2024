@@ -28,7 +28,7 @@ export default function LoginScreen() {
         setIsWrongPassword(false);
         setErrorID('');
         setErrorPassword('');
-        navigation.navigate('HomePage');
+    
         if (vehicleID === '') {
             setIsWrongId(true);
             setErrorID('Vehicle ID is required');
@@ -43,6 +43,10 @@ export default function LoginScreen() {
         } else if (vehiclePassword !== realVehiculePassword) { 
             setIsWrongPassword(true);
             setErrorPassword('Wrong password');
+        }
+
+        if (vehicleID === realVehiculeID && vehiclePassword === realVehiculePassword) {
+            navigation.navigate('HomePage', { vehicleID });
         }
     }
 

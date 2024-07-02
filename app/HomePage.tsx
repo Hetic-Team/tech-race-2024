@@ -7,36 +7,68 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '.';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+
+type HomePageRouteProp = RouteProp<RootStackParamList, 'HomePage'>;
 
 export default function HomePage() {
-   
+    const route = useRoute<HomePageRouteProp>();
+    const { vehicleID } = route.params;
 
-    const handleSubmit = () => {
-       console.log("Button Clicked")
-    }
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+
+    const handleSessionLogs = () => {
+        console.log("Button Session")
+        navigation.navigate('SessionLogs');
+     }
+
+     const handleDriveManually = () => {
+        console.log("Button Drive Manually")
+        navigation.navigate('DriveManually');
+     }
+
+     const handleAutoDrive = () => {
+        console.log("Button Auto Drive")
+        navigation.navigate('AutoDrive');
+     }
+
+     const handleSetting = () => {
+        console.log("Button Setting")
+        navigation.navigate('Setting');
+     }
+
+     const handleVehicleData = () => {
+        console.log("Button Vehicle Data")
+        navigation.navigate('VehicleData');
+     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.vehicleId}>Vehicle ID : XXXXXX</Text>
+            <Text style={styles.vehicleId}>Vehicle ID : {vehicleID}</Text>
             <Button 
                 label="VEHICLE DATA" 
-                onClick={handleSubmit}
+                onClick={handleVehicleData}
             />
              <Button 
                 label="DRIVE MANUALLY" 
-                onClick={handleSubmit}
+                onClick={handleDriveManually}
             />
              <Button 
                 label="AUTO DRIVE" 
-                onClick={handleSubmit}
+                onClick={handleAutoDrive}
             />
              <Button 
                 label="SESSION LOGS" 
-                onClick={handleSubmit}
+                onClick={handleSessionLogs}
             />
              <Button 
                 label="SETTINGS" 
-                onClick={handleSubmit}
+                onClick={handleSetting}
             />
         </View>
     );
