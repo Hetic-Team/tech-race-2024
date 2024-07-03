@@ -1,38 +1,41 @@
 // CarCommands.js
-import { BASE_URL } from '../constants/Urls';
-import WebSocketHelper from './WebsocketHelper';
 
-const carApi = BASE_URL;
-const wsHelper = new WebSocketHelper(carApi);
-
-export const moveForwards = () => {
+export const getStopPayload = () => {
   const command = {
     cmd: 1,
-    data: [2000, 2000, 2000, 2000],
+    data: [0,0,0,0],
   };
-  wsHelper.sendCommand(command);
+  return command;
+};
+export const getForwardsPayload = () => {
+  const command = {
+    cmd: 1,
+    data: [500, 500, 500, 500],
+  };
+  return command;
 };
 
-export const moveBackwards = () => {
+export const getBackwardsPayload = () => {
   const command = {
     cmd: 1,
-    data: [-2000, -2000, -2000, -2000],
+    data: [-500, -500, -500, -500],
   };
-  wsHelper.sendCommand(command);
+  return command;
 };
 
-export const turnLeft = () => {
+export const getLeftPayload = () => {
   const command = {
     cmd: 1,
-    data: [-2000, 2000, -2000, 2000],
+    data: [200, 500, 200, 500],
   };
-  wsHelper.sendCommand(command);
+  return command;
 };
 
-export const turnRight = () => {
+export const getRightPayload = () => {
   const command = {
     cmd: 1,
-    data: [2000, -2000, 2000, -2000],
+    data: [500, 200, 500, 200],
   };
-  wsHelper.sendCommand(command);
+  return command;
+
 };
