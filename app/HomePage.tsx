@@ -17,7 +17,7 @@ type HomePageRouteProp = RouteProp<RootStackParamList, 'HomePage'>;
 
 export default function HomePage() {
     const route = useRoute<HomePageRouteProp>();
-    const { vehicleID } = route.params;
+    const { vehicleIP } = route.params;
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -49,7 +49,7 @@ export default function HomePage() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.vehicleId}>Vehicle ID : {vehicleID}</Text>
+            <Text style={styles.vehicleId}>Vehicle ID : {vehicleIP}</Text>
             <Button 
                 label="VEHICLE DATA" 
                 onClick={handleVehicleData}
