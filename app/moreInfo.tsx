@@ -24,7 +24,7 @@ export default function MoreInfo() {
 
     const handleSessionLog = () => {
         console.log("Button Session Log")
-        navigation.navigate('SessioLog');
+        navigation.navigate('SessionLog');
     }
 
     return (
