@@ -1,10 +1,11 @@
 import { Image, StyleSheet, Platform } from 'react-native';
 
 import SplashScreen from './splash';
+import HomeScreen from './home';
 
-export default function HomeScreen() {
+export default function InitialScreen() {
   return (
-   <SplashScreen/>
+   <HomeScreen/>
   );
 }
 
