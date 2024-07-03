@@ -1,6 +1,5 @@
 import { Colors } from '@/constants/Colors';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
@@ -8,6 +7,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/app/index';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 
 
 export default function DriveManually() {
@@ -20,9 +20,18 @@ export default function DriveManually() {
     };
     
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Welcome to the Drive Manually Screen!</Text>
-        </View>
+        //<SafeAreaView style={styles.container}>
+          //<ScrollView style={styles.scrollContentContainer}>
+            <View style={[
+            styles.box,
+            {
+                transform: [{skewX: '-45deg'}, {skewY: '45deg'}],
+            },
+           ]}>
+                <Text style={styles.text}>Welcome to the Drive Manually Screen!</Text>
+            </View>
+          //</ScrollView>
+        //</SafeAreaView>
     );
 };
 
@@ -49,4 +58,17 @@ const styles = StyleSheet.create({
         color: 'white',
         
     },
+    scrollContentContainer: {
+        alignItems: 'center',
+        paddingBottom: 60,
+    },
+    box: {
+        height: 100,
+        width: 100,
+        borderRadius: 5,
+        marginVertical: 40,
+        backgroundColor: '#61dafb',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
 });

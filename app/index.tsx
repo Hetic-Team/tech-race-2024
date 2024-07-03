@@ -14,7 +14,7 @@ import VehicleData from './vehicleData';
 export type RootStackParamList = {
   Start: undefined;
   Login: undefined;
-  HomePage: { vehicleID: string };
+  HomePage: { vehicleIP: string };
   AutoDrive: undefined;
   DriveManually: undefined;
   SessionLogs: undefined;

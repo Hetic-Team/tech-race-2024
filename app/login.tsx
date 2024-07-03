@@ -6,49 +6,41 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/app/index';
-
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 export default function LoginScreen() {
-    const [isWrongId, setIsWrongId] = useState<boolean>(false);
-    const [isWrongPassword, setIsWrongPassword] = useState<boolean>(false);
-    const [errorID, setErrorID] = useState<string>('');
-    const [errorPassword, setErrorPassword] = useState<string>('');
-    const [vehicleID, setVehicleID] = useState<string>('');
-    const [vehiclePassword, setVehiclePassword] = useState<string>('');
+    
+    const [errorIP, setErrorIP] = useState<string>('');
+    const [vehicleIP, setVehicleIP] = useState<string>('');
+    const [errorMessage, setErrorMessage] = useState<Boolean>(false)
 
-    const realVehiculeID = 'alexandre';
-    const realVehiculePassword = '1234';
+    const realVehiculeIP = '1234';
 
+    // Hook de navigation pour naviguer entre les écrans
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 
-
     const handleSubmit = () => {
-        setIsWrongId(false);
-        setIsWrongPassword(false);
-        setErrorID('');
-        setErrorPassword('');
-    
-        if (vehicleID === '') {
-            setIsWrongId(true);
-            setErrorID('Vehicle ID is required');
-        } else if (vehicleID !== realVehiculeID) {
-            setIsWrongId(true);
-            setErrorID('This vehicle ID does not exist');
-        }
-    
-        if (vehiclePassword === '') {
-            setIsWrongPassword(true);
-            setErrorPassword('Vehicle password is required');
-        } else if (vehiclePassword !== realVehiculePassword) { 
-            setIsWrongPassword(true);
-            setErrorPassword('Wrong password');
+        setErrorIP(''); 
+
+
+        if (vehicleIP === '') {
+            setErrorIP('Vehicle IP is required');
+            setErrorMessage(true)
+        } 
+       
+        else if (vehicleIP !== realVehiculeIP) {
+            setErrorIP('This vehicle IP does not exist');
+            setErrorMessage(true);
         }
 
-        if (vehicleID === realVehiculeID && vehiclePassword === realVehiculePassword) {
-            navigation.navigate('HomePage', { vehicleID });
+        if (vehicleIP === realVehiculeIP) {
+            navigation.navigate('HomePage', { vehicleIP });
         }
-    }
+    };
 
     return (
         <View style={styles.container}>
@@ -56,30 +48,21 @@ export default function LoginScreen() {
             <Text style={styles.subtitleLogin}>Enter your vehicle infos.</Text>
 
             <Input 
-                label="Vehicle ID" 
-                placeholder="Enter Vehicle ID" 
+                label="Vehicle IP Address" 
+                placeholder="Enter Vehicle IP Address" 
                 secureTextEntry={false} 
-                isErrored={isWrongId} 
-                errorMessage={errorID}
-                value={vehicleID}
-                onChange={setVehicleID}
+                errorMessage={errorIP}
+                value={vehicleIP}
+                onChange={setVehicleIP}  // Notez le changement à onChangeText
             />
-            <Input 
-                label="Vehicle Password" 
-                placeholder="Enter Vehicle Password" 
-                secureTextEntry={true} 
-                isErrored={isWrongPassword} 
-                errorMessage={errorPassword}
-                value={vehiclePassword}
-                onChange={setVehiclePassword}
-            />
+            {errorMessage ? <Text style={styles.errorText}>{errorIP}</Text> : null}
             <Button 
                 label="CONNECT" 
                 onClick={handleSubmit}
             />
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -102,5 +85,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         fontSize: 16,
         color: Colors.dark.text,
-    }
+    },
+    errorText: {
+        top : -20,
+        color: 'red',
+    },
 });
