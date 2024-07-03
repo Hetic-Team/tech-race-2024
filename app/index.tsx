@@ -25,7 +25,7 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export default function HomeScreen() {
+export default function InitialScreen() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Start"
