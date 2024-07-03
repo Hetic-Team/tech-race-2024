@@ -5,20 +5,11 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@/app/index';
+
 
 
 export default function VehicleData() {
 
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-    const handleStart = () => {
-      console.log("Button Start")
-      navigation.navigate('Login');
-    };
-    
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Welcome to the Vehicle data Screen!</Text>

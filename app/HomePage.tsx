@@ -1,5 +1,4 @@
 import Button from '@/components/Button';
-import { Input } from '@/components/Input';
 import { Colors } from '@/constants/Colors';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
@@ -22,9 +21,9 @@ export default function HomePage() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 
-    const handleSessionLogs = () => {
-        console.log("Button Session")
-        navigation.navigate('SessionLogs');
+    const handleMoreInfo = () => {
+        console.log("Button More Info")
+        navigation.navigate('MoreInfo');
      }
 
      const handleDriveManually = () => {
@@ -32,7 +31,7 @@ export default function HomePage() {
         navigation.navigate('DriveManually');
      }
 
-     const handleAutoDrive = () => {
+     const handleDriveAuto = () => {
         console.log("Button Auto Drive")
         navigation.navigate('AutoDrive');
      }
@@ -42,32 +41,26 @@ export default function HomePage() {
         navigation.navigate('Setting');
      }
 
-     const handleVehicleData = () => {
-        console.log("Button Vehicle Data")
-        navigation.navigate('VehicleData');
-     }
+    
 
     return (
         <View style={styles.container}>
             <Text style={styles.vehicleId}>Vehicle ID : {vehicleIP}</Text>
-            <Button 
-                label="VEHICLE DATA" 
-                onClick={handleVehicleData}
-            />
+           
              <Button 
-                label="DRIVE MANUALLY" 
+                label="Drive Manually" 
                 onClick={handleDriveManually}
             />
              <Button 
-                label="AUTO DRIVE" 
-                onClick={handleAutoDrive}
+                label="Drive Auto" 
+                onClick={handleDriveAuto}
             />
              <Button 
-                label="SESSION LOGS" 
-                onClick={handleSessionLogs}
+                label="More Info" 
+                onClick={handleMoreInfo}
             />
              <Button 
-                label="SETTINGS" 
+                label="Settings" 
                 onClick={handleSetting}
             />
         </View>

@@ -36,7 +36,7 @@ button: {
     textAlign: 'center',
     textAlignVertical: 'center',
     height: hp(7),
-    width: '100%',
+    width: wp(80),
     borderRadius: 8,
     color: 'white',
     justifyContent: 'center',
