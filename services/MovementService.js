@@ -10,7 +10,7 @@ export const getStopPayload = () => {
 export const getForwardsPayload = () => {
   const command = {
     cmd: 1,
-    data: [500, 500, 500, 500],
+    data: [2000, 2000, 2000, 2000],
   };
   return command;
 };
@@ -18,7 +18,7 @@ export const getForwardsPayload = () => {
 export const getBackwardsPayload = () => {
   const command = {
     cmd: 1,
-    data: [-500, -500, -500, -500],
+    data: [-2000, -2000, -2000, -2000],
   };
   return command;
 };
@@ -26,7 +26,7 @@ export const getBackwardsPayload = () => {
 export const getLeftPayload = () => {
   const command = {
     cmd: 1,
-    data: [200, 500, 200, 500],
+    data: [200, 200, 2000, 2000],
   };
   return command;
 };
@@ -34,7 +34,7 @@ export const getLeftPayload = () => {
 export const getRightPayload = () => {
   const command = {
     cmd: 1,
-    data: [500, 200, 500, 200],
+    data: [2000, 2000, 200, 200],
   };
   return command;
 
