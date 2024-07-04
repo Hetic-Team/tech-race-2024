@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import RNGamePad from 'react-native-game-pad';
 //import { moveRobot } from "../utils/ROS/ROSFunctions";
 
@@ -6,7 +7,7 @@ function JoystickSecond() {
   // state
 
   return (
-    <div>
+    <View>
       <RNGamePad
   buttonAColor='red'
   // onButtonBPress={this.handleButtonBPress}
@@ -23,7 +24,7 @@ function JoystickSecond() {
     lockY: true
   }}
 />
-    </div>
+    </View>
   );
 }
 

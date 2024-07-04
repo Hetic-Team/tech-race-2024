@@ -33,12 +33,12 @@ export default function DriveManually() {
   };
   useEffect(() => {
     // Lock the orientation to landscape when the screen is focused
-    Orientation.lockToLandscape();
+    // Orientation.lockToLandscape();
 
-    // Unlock orientation when the screen is unfocused
-    return () => {
-      Orientation.unlockAllOrientations();
-    };
+    // // Unlock orientation when the screen is unfocused
+    // return () => {
+    //   Orientation.unlockAllOrientations();
+    // };
   }, []);
 
   return (
