@@ -4,7 +4,7 @@ import { getForwardsPayload, getBackwardsPayload, getLeftPayload, getRightPayloa
 import { BASE_URL } from '@/constants/Urls';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export const Joystick = () => {
+export const JoystickCamera = () => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<string[]>([]);
 
