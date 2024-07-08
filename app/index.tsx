@@ -39,7 +39,6 @@ export default function HomeScreen() {
         <Stack.Screen name="MoreInfo" component={MoreInfo} />
         <Stack.Screen name="DriveManually" component={DriveManually} />
         <Stack.Screen name="AutoDrive" component={AutoDrive} />
-        <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="VehicleData" component={VehicleData} />
         <Stack.Screen name="SessionLog" component={SessionLog} />
       </Stack.Navigator>
