@@ -38,14 +38,14 @@ export default function HomePage() {
 
      const handleSetting = () => {
         console.log("Button Setting")
-        navigation.navigate('Settings');
+        navigation.navigate('Setting');
      }
 
     
 
     return (
         <View style={styles.container}>
-            <Text style={styles.vehicleId}>Vehicle ID : {vehicleIP}</Text>
+            <Text style={styles.vehicleIP}>Vehicle IP : {vehicleIP}</Text>
            
              <Button 
                 label="Drive Manually" 
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: Colors.dark.text,
     },
-    vehicleId :{
+    vehicleIP :{
         color: '#ffffff',
         fontSize: 20,
     }
