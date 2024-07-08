@@ -39,7 +39,7 @@ export default function HomePage() {
 
      const handleSetting = () => {
         console.log("Button Setting")
-        navigation.navigate('Setting');
+        navigation.navigate('Settings');
      }
 
      const handleVehicleData = () => {

@@ -6,8 +6,27 @@ import IconArrowLeft from '@/assets/Icons/IconArowLeft';
 import { IconNotifications } from '@/assets/Icons/IconNotifications';
 import { IconLogout } from '@/assets/Icons/IconLogout';
 import { SwitchButton } from '@/components/SwitchButton';
+import { RootStackParamList } from '.';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRoute, RouteProp } from '@react-navigation/native';
+
+type SettingsRouteProp = RouteProp<RootStackParamList, 'Settings'>;
 
 export default function SettingsScreen() {
+
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const route = useRoute<SettingsRouteProp>();
+
+    const vehicleID  = route.params;
+
+    const handleBack = () => {
+        navigation.navigate('HomePage', { vehicleID });
+    }
+
+    const handleLogout = () => {
+        navigation.navigate('Login');
+    }
 
     const [isAutoPilot, setIsAutoPilot] = useState(false);
     const [isNotificationOn, setIsNotificationOn] = useState(false);
@@ -18,7 +37,7 @@ export default function SettingsScreen() {
     return (
         <View style={styles.container}>
             <View style={styles.navigationContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleBack}>
                     <IconArrowLeft />
                 </TouchableOpacity>
                 <Text style={styles.settingsText}>Settings</Text>
@@ -26,7 +45,7 @@ export default function SettingsScreen() {
             <View style={styles.vehiculeInformations}>
                 <TouchableOpacity onPress={() => {}}>
                 </TouchableOpacity>
-                <Text style={styles.vehiculeText}>Vehicule ID : {} </Text>
+                <Text style={styles.vehiculeText}>Vehicule ID : {vehicleID} </Text>
             </View>
             <View style={styles.settingsContainer}>
                 <View style={styles.rowContainer}>
@@ -39,7 +58,7 @@ export default function SettingsScreen() {
                     <Text style={styles.settingsText}>Notifications</Text>
                     <SwitchButton isActive={isNotificationOn} onClick={toggleNotifications}/>
                 </View>
-                <TouchableOpacity style={styles.logoutButton}>
+                <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
                     <Text style={styles.logoutButtonText}>LOGOUT</Text>
                     <IconLogout color="red" size={20}/>
                 </TouchableOpacity>
