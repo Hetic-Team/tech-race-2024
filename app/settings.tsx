@@ -19,7 +19,7 @@ export default function Setting() {
 
     const route = useRoute<SettingsRouteProp>();
 
-    const vehicleIP  = route.params;
+    const { vehicleIP } = route.params;
 
     const handleBack = () => {
         navigation.navigate('HomePage', { vehicleIP });
