@@ -1,10 +1,10 @@
 import { Joystick } from 'react-joystick-component';
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { getForwardsPayload, getBackwardsPayload, getLeftPayload, getRightPayload, getStopPayload, mapJoystickToCameraAngles} from '@/services/MovementService'; 
+import { getForwardsPayload, getBackwardsPayload, getLeftPayload, getRightPayload, getStopPayload} from '@/services/MovementService'; 
 import { BASE_URL } from '@/constants/Urls';
 
-export const JoystickCamera = () => {
+export const JoystickPad = () => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<string[]>([]);
 
@@ -33,10 +33,17 @@ export const JoystickCamera = () => {
       socket.close();
     };
   }, []);
-  /**
-   * Send request to the API
-   * @param payload 
-   */
+
+  // const [input, setInput] = useState('');
+  
+  // const sendMessage = () => {
+  //   if (ws && input) {
+  //     ws.send(input);
+  //     setMessages(prevMessages => [...prevMessages, `You: ${input}`]);
+  //     setInput('');
+  //   }
+  // };
+
   const sendPayload = (payload: { cmd: number; data: number[]; }) => {
     
     if (ws) {
@@ -44,22 +51,36 @@ export const JoystickCamera = () => {
       setMessages(prevMessages => [...prevMessages, `You: ${JSON.stringify(payload)}`]);
     }
   };
-  /**
-   * Handle the joystick movement
-   * @param e 
-   */
-  const handleButtonPress = (e: any) => {
-    console.log('Button pressed:', e);
-    let xVal = e.x;
-    let yVal = e.y;
-    sendPayload({
-      cmd: 3,
-      data: mapJoystickToCameraAngles(xVal, yVal),
-    });
+
+  const sendDirectionToAPI = async (type: Number) => {
+    try {
+      console.log('Sending direction to API:', type);
+      if(type == 0) sendPayload(getStopPayload());
+      else if (type == 1) {
+        sendPayload(getForwardsPayload());
+      }
+      else if (type == 2) sendPayload(getBackwardsPayload());
+      else if (type == 3) sendPayload(getLeftPayload());
+      else if (type == 4) sendPayload(getRightPayload());
+    } catch (error) {
+      console.log('Error sending direction to API:', error);
+    }
   };
-  
+
+  const handleButtonPress = (e: any) => {
+    if(e.type == "stop") sendDirectionToAPI(0);
+    else if (e.direction == "FORWARD") sendDirectionToAPI(1);
+    else if (e.direction == "RIGHT") sendDirectionToAPI(4);
+    else if (e.direction == "LEFT") sendDirectionToAPI(3);
+    else if (e.direction == "BACKWARD") sendDirectionToAPI(2);
+    else sendDirectionToAPI(0);
+
+    };
+    // sendDirectionToAPI(type);
+
+
   return (
-    <Joystick size={100} throttle={50} sticky={true} baseColor="red" stickColor="blue" move={handleButtonPress}></Joystick>
+    <Joystick size={100} throttle={50} sticky={true} baseColor="red" stickColor="blue" start={handleButtonPress} move={handleButtonPress} stop={handleButtonPress}></Joystick>
   );
 };
 

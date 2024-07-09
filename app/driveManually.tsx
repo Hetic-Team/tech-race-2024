@@ -1,6 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import React, { useEffect } from "react";
-import Orientation from "react-native-orientation-locker";
+import * as ScreenOrientation from 'expo-screen-orientation';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,10 +17,11 @@ import {
   Image,
 } from "react-native";
 
-import { Joystick } from "@/components/Joystick";
+// import { Joystick } from "@/components/Joystick";
 
-import JoystickSecond from "../components/JoystickSecond";
+// import JoystickSecond from "../components/JoystickSecond";
 import SettingsPopup from "@/popups/SettingsPopup";
+import { JoystickPad } from "@/components/JoystickPad";
 import { JoystickCamera } from "@/components/JoystickCamera";
 
 export default function DriveManually() {
@@ -32,12 +33,12 @@ export default function DriveManually() {
     navigation.navigate("Login");
   };
   useEffect(() => {
-    // Lock the orientation to landscape when the screen is focused
-    // Orientation.lockToLandscape();
+    // // Lock the orientation to landscape when this component mounts
+    // ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
 
-    // // Unlock orientation when the screen is unfocused
+    // // Unlock orientation to all directions when this component unmounts
     // return () => {
-    //   Orientation.unlockAllOrientations();
+    //   ScreenOrientation.unlockAsync();
     // };
   }, []);
 
@@ -45,11 +46,11 @@ export default function DriveManually() {
     <Provider>
       <SafeAreaView style={styles.container}>
         <View style={styles.joystick}>
-                  <Joystick />
+          <JoystickPad/>
                 
               </View>
               <View style={styles.joystickCamera}>
-              <JoystickSecond />
+              <JoystickCamera />
                 
               </View>
        
