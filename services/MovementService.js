@@ -39,3 +39,11 @@ export const getRightPayload = () => {
   return command;
 
 };
+
+export const camOn = () =>{
+  const command = {
+    cmd: 9,
+    data: 1,
+  };
+  return command;
+}
