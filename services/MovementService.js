@@ -39,3 +39,22 @@ export const getRightPayload = () => {
   return command;
 
 };
+/**
+ * Get the payload for the camera movement command
+ * @param {Number} x 
+ * @param {Number} y 
+ * @returns 
+ */
+export const mapJoystickToCameraAngles = (x, y) => {
+  // Ensure x and y are within the range -1 to 1
+  x = Math.max(-1, Math.min(1, x));
+  y = Math.max(-1, Math.min(1, y));
+
+  // Calculate the vertical angle based on y-axis
+  const verticalAngle = 20 + ((y + 1) * 140 / 2);
+
+  // Calculate the horizontal angle based on x-axis
+  const horizontalAngle = 20 + ((x + 1) * 140 / 2);
+
+  return [verticalAngle, horizontalAngle];
+}
