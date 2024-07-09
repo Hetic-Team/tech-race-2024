@@ -1,5 +1,5 @@
 import { Colors } from '@/constants/Colors';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -10,6 +10,7 @@ import { IconNotifications } from '@/assets/Icons/IconNotifications';
 import { IconLogout } from '@/assets/Icons/IconLogout';
 import { SwitchButton } from '@/components/SwitchButton';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type SettingsRouteProp = RouteProp<RootStackParamList, 'Setting'>;
 
@@ -31,9 +32,46 @@ export default function Setting() {
 
     const [isAutoPilot, setIsAutoPilot] = useState(false);
     const [isNotificationOn, setIsNotificationOn] = useState(false);
+
+    useEffect(() => {
+        const getSwitchState = async () => {
+          try {
+
+            const savedNotificationState = await AsyncStorage.getItem('notificationSwitchState');
+            if (savedNotificationState !== null) {
+                setIsNotificationOn(JSON.parse(savedNotificationState));
+            }
     
-    const toggleAutoPilot = () => setIsAutoPilot(isAutoPilot => !isAutoPilot);
-    const toggleNotifications = () => setIsNotificationOn(isNotificationOn => !isNotificationOn);
+            const savedAutopilotState = await AsyncStorage.getItem('autopilotSwitchState');
+            if (savedAutopilotState !== null) {
+                setIsAutoPilot(JSON.parse(savedAutopilotState));
+            }
+
+          } catch (error) {
+            console.log(error);
+          }
+        };
+    
+        getSwitchState();
+      }, []);
+    
+      const toggleNotifications = async () => {
+        setIsNotificationOn(isNotificationOn => !isNotificationOn);
+        try {
+          await AsyncStorage.setItem('notificationSwitchState', JSON.stringify(!isNotificationOn));
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      const toggleAutoPilot = async () => {
+        setIsAutoPilot(isAutoPilot => !isAutoPilot);
+        try {
+          await AsyncStorage.setItem('autopilotSwitchState', JSON.stringify(!isAutoPilot));
+        } catch (error) {
+          console.log(error);
+        }
+      };
     
     return (
         <View style={styles.container}>
