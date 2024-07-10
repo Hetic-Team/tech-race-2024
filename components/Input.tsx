@@ -1,68 +1,60 @@
-import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet } from 'react-native';
-import  { Colors } from '@/constants/Colors'
+import React from 'react';
+import { TextInput, View, Text, StyleSheet } from 'react-native';
+import { Colors } from '@/constants/Colors';
 
-type InputProps = {
-    label: string,
-    value: string,
-    placeholder: string,
-    secureTextEntry?: boolean,
-    isErrored?: boolean,
-    errorMessage?: string,
-    onChange: (text: string) => void,
+interface InputProps {
+    label: string;
+    placeholder: string;
+    secureTextEntry: boolean;
+    errorMessage?: string;
+    value: string;
+    onChange: (text: string) => void;
+}
+
+const Input: React.FC<InputProps> = ({
+    label,
+    placeholder,
+    secureTextEntry,
+    errorMessage,
+    value,
+    onChange,
+}) => {
+    return (
+        <View style={styles.inputContainer}>
+            <Text style={styles.label}>{label}</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={placeholder}
+                secureTextEntry={secureTextEntry}
+                value={value}
+                onChangeText={onChange}
+            />
+            {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
+        </View>
+    );
 };
 
-export const Input = (props: InputProps) => {
-    const [isFocused, setIsFocused] = useState(false);
-
-    return (
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>{props.label}</Text>
-        <TextInput
-            style={[styles.input, isFocused && styles.inputFocused,props.isErrored && styles.inputErrored]}
-            placeholder={props.placeholder}
-            placeholderTextColor={Colors.dark.placeholder}
-            secureTextEntry={props.secureTextEntry}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            value={props.value}
-            onChangeText={props.onChange}
-        />
-         {props.secureTextEntry && props.isErrored && <Text style={styles.errorMessage}>{props.errorMessage}</Text>}
-         {!props.secureTextEntry && props.isErrored && <Text style={styles.errorMessage}>{props.errorMessage}</Text>}
-      </View>
-    );
-  };
-
 const styles = StyleSheet.create({
-
     inputContainer: {
-        marginBottom: 40,
+        marginBottom: 20,
     },
-    inputLabel: {
-        color: Colors.light.primaryGreen,
+    label: {
+        marginBottom: 5,
+        color: Colors.dark.text,
         fontSize: 16,
-        marginBottom: 2,
     },
     input: {
-        height: 50,
-        borderColor: Colors.light.inputBorder,
         borderWidth: 1,
-        borderRadius: 10,
+        borderColor: Colors.dark.border,
+        borderRadius: 5,
         paddingHorizontal: 10,
+        paddingVertical: 8,
         fontSize: 16,
-        color: Colors.dark.text,
-        backgroundColor: Colors.light.inputBackground,
     },
-    inputFocused: {
-        borderColor: Colors.light.primaryGreen,
-    },
-    errorMessage: {
-        bottom: 0,
-        color: Colors.light.errorColor,
-        marginTop: 2,
-    },
-    inputErrored: {
-        borderColor: Colors.light.errorColor,
+    error: {
+        color: 'red',
+        marginTop: 5,
     },
 });
+
+export default Input;

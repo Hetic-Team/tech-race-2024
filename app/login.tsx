@@ -1,38 +1,31 @@
-import Button from '@/components/Button';
-import { Input } from '@/components/Input';
-import { Colors } from '@/constants/Colors';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/app/index';
-import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-export default function LoginScreen() {
-    
+import Button from '@/components/Button';
+import Input from '@/components/Input';
+import { Colors } from '@/constants/Colors';
+
+const LoginScreen: React.FC = () => {
     const [errorIP, setErrorIP] = useState<string>('');
     const [vehicleIP, setVehicleIP] = useState<string>('');
-    const [errorMessage, setErrorMessage] = useState<Boolean>(false)
+    const [errorMessage, setErrorMessage] = useState<boolean>(false);
 
     const realVehiculeIP = '1234';
 
-    // Hook de navigation pour naviguer entre les écrans
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-
     const handleSubmit = () => {
-        setErrorIP(''); 
-
+        setErrorIP('');
+        setErrorMessage(false);
 
         if (vehicleIP === '') {
             setErrorIP('Vehicle IP is required');
-            setErrorMessage(true)
-        } 
-       
-        else if (vehicleIP !== realVehiculeIP) {
+            setErrorMessage(true);
+        } else if (vehicleIP !== realVehiculeIP) {
             setErrorIP('This vehicle IP does not exist');
             setErrorMessage(true);
         }
@@ -43,51 +36,54 @@ export default function LoginScreen() {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.titleLogin}>Tech Race Login</Text>
-            <Text style={styles.subtitleLogin}>Enter your vehicle infos.</Text>
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -200}
+        >
+            <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
+                <Text style={styles.titleLogin}>Tech Race Login</Text>
+                <Text style={styles.subtitleLogin}>Enter your vehicle infos.</Text>
 
-            <Input 
-                label="Vehicle IP Address" 
-                placeholder="Enter Vehicle IP Address" 
-                secureTextEntry={false} 
-                errorMessage={errorIP}
-                value={vehicleIP}
-                onChange={setVehicleIP}  // Notez le changement à onChangeText
-            />
-            {errorMessage ? <Text style={styles.errorText}>{errorIP}</Text> : null}
-            <Button 
-                label="CONNECT" 
-                onClick={handleSubmit}
-            />
-        </View>
+                <Input
+                    label="Vehicle IP Address"
+                    placeholder="Enter Vehicle IP Address"
+                    secureTextEntry={false}
+                    errorMessage={errorIP}
+                    value={vehicleIP}
+                    onChange={setVehicleIP}
+                />
+                {errorMessage ? <Text style={styles.errorText}>{errorIP}</Text> : null}
+                <Button label="CONNECT" onClick={handleSubmit} />
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
-        position: 'relative',
         flex: 1,
-        justifyContent: 'center',
         backgroundColor: Colors.dark.mainBackground,
-        paddingHorizontal: 40,
+    },
+    scrollContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        paddingHorizontal: wp('10%'),
     },
     titleLogin: {
-        top: 60,
-        left: 40,
-        position: 'absolute',
-        fontSize: 40,
+        fontSize: wp('10%'),
         color: Colors.dark.text,
+        marginBottom: hp('2%'),
     },
     subtitleLogin: {
-        top: 120,
-        left: 40,
-        position: 'absolute',
-        fontSize: 16,
+        fontSize: wp('4%'),
         color: Colors.dark.text,
+        marginBottom: hp('5%'),
     },
     errorText: {
-        top : -20,
         color: 'red',
+        marginBottom: hp('2%'),
     },
 });
+
+export default LoginScreen;
