@@ -1,13 +1,10 @@
 import { Colors } from '@/constants/Colors';
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import { BarChart } from 'react-native-chart-kit';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const SessionLogs: React.FC = () => {
+const SessionLogs = () => {
   const [data, setData] = useState([
     {
       id: 39,
@@ -49,7 +46,6 @@ const SessionLogs: React.FC = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>Session Logs</Text>
-      
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.sortButton, sortBy === 'date' && styles.activeSortButton]}
@@ -74,35 +70,46 @@ const SessionLogs: React.FC = () => {
       {data.map(item => (
         <View key={item.id} style={styles.logItem}>
           <Text style={styles.logText}>Start Time: {item.start_time}</Text>
-          <Text style={styles.logText}>Collisions: {item.collisions[0]?.count}</Text>
-          <Text style={styles.logText}>Line Losses: {item.tracks[0]?.count}</Text>
-          
-          {item.tracks[0]?.timestamps && item.tracks[0]?.line_tracking_values ? (
-            <LineChart
+          <View style={styles.chartContainer}>
+            <Text style={styles.chartLabel}>Collisions</Text>
+            <BarChart
               data={{
-                labels: item.tracks[0].timestamps,
-                datasets: [
-                  {
-                    data: item.tracks[0].line_tracking_values,
-                  },
-                ],
+                labels: [''],
+                datasets: [{
+                  data: [item.collisions[0]?.count || 0],
+                }],
               }}
               width={wp('90%')}
-              height={200}
+              height={hp('10%')}
               chartConfig={{
                 backgroundGradientFrom: '#ffffff',
                 backgroundGradientTo: '#ffffff',
                 decimalPlaces: 0,
                 color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
               }}
-              bezier
+              style={styles.chart}
             />
-          ) : (
-            <Text>No data available for line tracking</Text>
-          )}
+          </View>
+          <View style={styles.chartContainer}>
+            <Text style={styles.chartLabel}>Line Losses</Text>
+            <BarChart
+              data={{
+                labels: [''],
+                datasets: [{
+                  data: [item.tracks[0]?.count || 0],
+                }],
+              }}
+              width={wp('90%')}
+              height={hp('10%')}
+              chartConfig={{
+                backgroundGradientFrom: '#ffffff',
+                backgroundGradientTo: '#ffffff',
+                decimalPlaces: 0,
+                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              }}
+              style={styles.chart}
+            />
+          </View>
         </View>
       ))}
     </ScrollView>
@@ -154,6 +161,19 @@ const styles = StyleSheet.create({
   logText: {
     fontSize: wp('4.5%'),
     marginBottom: hp('1%'),
+  },
+  chartContainer: {
+    width: wp('90%'),
+    alignItems: 'center',
+    marginBottom: hp('1%'),
+  },
+  chartLabel: {
+    fontSize: wp('4%'),
+    fontWeight: 'bold',
+    marginBottom: hp('1%'),
+  },
+  chart: {
+    borderRadius: 16,
   },
 });
 
