@@ -1,6 +1,6 @@
 import { Colors } from '@/constants/Colors';
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -9,21 +9,29 @@ const SessionLogs = () => {
     {
       id: 39,
       start_time: "09/07/2024 - 12:46:15",
-      collisions: [{ count: 2 }],
-      tracks: [{ count: 0 }],
+      collisions: [{ time: "12:46:15", count: 1 }, { time: "12:46:30", count: 2 }],
+      tracks: [{ time: "12:46:15", count: 0 }, { time: "12:46:30", count: 1 }],
     },
     {
       id: 40,
       start_time: "09/07/2024 - 12:48:12",
-      collisions: [{ count: 8 }],
-      tracks: [{ count: 16 }],
+      collisions: [{ time: "12:48:12", count: 8 }, { time: "12:48:30", count: 9 }],
+      tracks: [{ time: "12:48:12", count: 16 }, { time: "12:48:30", count: 17 }],
     }
   ]);
   const [sortBy, setSortBy] = useState('date');
 
   const sortByDate = (a, b) => new Date(a.start_time) - new Date(b.start_time);
-  const sortByCollisions = (a, b) => b.collisions[0]?.count - a.collisions[0]?.count;
-  const sortByLineLosses = (a, b) => b.tracks[0]?.count - a.tracks[0]?.count;
+  const sortByCollisions = (a, b) => {
+    const sumA = a.collisions.reduce((acc, item) => acc + item.count, 0);
+    const sumB = b.collisions.reduce((acc, item) => acc + item.count, 0);
+    return sumB - sumA;
+  };
+  const sortByLineLosses = (a, b) => {
+    const sumA = a.tracks.reduce((acc, item) => acc + item.count, 0);
+    const sumB = b.tracks.reduce((acc, item) => acc + item.count, 0);
+    return sumB - sumA;
+  };
 
   useEffect(() => {
     let sortedData = [...data];
@@ -74,13 +82,13 @@ const SessionLogs = () => {
             <Text style={styles.chartLabel}>Collisions</Text>
             <BarChart
               data={{
-                labels: [''],
+                labels: item.collisions.map(c => c.time),
                 datasets: [{
-                  data: [item.collisions[0]?.count || 0],
+                  data: item.collisions.map(c => c.count),
                 }],
               }}
-              width={wp('90%')}
-              height={hp('10%')}
+              width={Platform.OS === 'web' ? wp('60%') : wp('90%')}
+              height={hp('30%')}
               chartConfig={{
                 backgroundGradientFrom: '#ffffff',
                 backgroundGradientTo: '#ffffff',
@@ -94,13 +102,13 @@ const SessionLogs = () => {
             <Text style={styles.chartLabel}>Line Losses</Text>
             <BarChart
               data={{
-                labels: [''],
+                labels: item.tracks.map(t => t.time),
                 datasets: [{
-                  data: [item.tracks[0]?.count || 0],
+                  data: item.tracks.map(t => t.count),
                 }],
               }}
-              width={wp('90%')}
-              height={hp('10%')}
+              width={Platform.OS === 'web' ? wp('60%') : wp('90%')}
+              height={hp('30%')}
               chartConfig={{
                 backgroundGradientFrom: '#ffffff',
                 backgroundGradientTo: '#ffffff',
@@ -128,6 +136,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.light.text,
     marginBottom: hp('3%'),
+    textAlign: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -161,6 +170,7 @@ const styles = StyleSheet.create({
   logText: {
     fontSize: wp('4.5%'),
     marginBottom: hp('1%'),
+    textAlign: 'center',
   },
   chartContainer: {
     width: wp('90%'),
@@ -171,6 +181,7 @@ const styles = StyleSheet.create({
     fontSize: wp('4%'),
     fontWeight: 'bold',
     marginBottom: hp('1%'),
+    textAlign: 'center',
   },
   chart: {
     borderRadius: 16,
