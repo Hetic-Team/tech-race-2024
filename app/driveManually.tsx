@@ -43,7 +43,7 @@ export default function DriveManually() {
   }, []);
 
   return (
-    <Provider>
+    //<Provider>
       <SafeAreaView style={styles.container}>
         <View style={styles.joystick}>
           <JoystickPad/>
@@ -57,7 +57,7 @@ export default function DriveManually() {
         <SettingsPopup />
         
       </SafeAreaView>
-    </Provider>
+    //</Provider>
   );
 }
 
