@@ -25,8 +25,7 @@ import { JoystickPad } from "@/components/JoystickPad";
 import { JoystickCamera } from "@/components/JoystickCamera";
 
 export default function DriveManually() {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const handleStart = () => {
     console.log("Button Start");
@@ -43,7 +42,7 @@ export default function DriveManually() {
   }, []);
 
   return (
-    //<Provider>
+    <Provider>
       <SafeAreaView style={styles.container}>
         <View style={styles.joystick}>
           <JoystickPad/>
@@ -57,7 +56,7 @@ export default function DriveManually() {
         <SettingsPopup />
         
       </SafeAreaView>
-    //</Provider>
+    </Provider>
   );
 }
 
