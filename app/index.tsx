@@ -4,7 +4,7 @@ import SplashScreen from './splash';
 import LoginScreen from './login';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomePage from './HomePage';
+import HomePage from './homePage';
 import DriveManually from './driveManually';
 import AutoDrive from './autoDrive';
 import Setting from './settings';
