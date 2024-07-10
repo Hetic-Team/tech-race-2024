@@ -58,3 +58,14 @@ export const mapJoystickToCameraAngles = (x, y) => {
 
   return [verticalAngle, horizontalAngle];
 }
+/**
+ * To on the camera
+ * @returns 
+ */
+export const camOn = () =>{
+  const command = {
+    cmd: 9,
+    data: 1,
+  };
+  return command;
+}

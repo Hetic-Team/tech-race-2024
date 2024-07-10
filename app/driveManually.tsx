@@ -1,10 +1,13 @@
+
 import { Colors } from "@/constants/Colors";
 import React, { useEffect } from "react";
 import * as ScreenOrientation from 'expo-screen-orientation';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+} from 'react-native-responsive-screen';
+import { WebView } from 'react-native-webview';
+import Constants from 'expo-constants';
 import { Provider } from "@react-native-material/core";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -31,6 +34,17 @@ export default function DriveManually() {
     console.log("Button Start");
     navigation.navigate("Login");
   };
+  const formatHtml = () => {
+    const googleUrl = 'http://192.168.155.10:7000/';
+    return (
+        `<html>
+            <body>
+            
+                <iframe src="${googleUrl}" width="700px" height="700px" style="position:relative; top: 500; left: 0; right: 0; bottom: 0;"/>
+            </body>
+        </html>`
+    );
+}
   useEffect(() => {
     // // Lock the orientation to landscape when this component mounts
     // ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -44,6 +58,22 @@ export default function DriveManually() {
   return (
     <Provider>
       <SafeAreaView style={styles.container}>
+      <WebView
+               style={[
+                
+                styles.cameraPlaceholder,
+                {
+                    transform: [{ skewX: '-45deg' }, { skewY: '45deg' }],
+                    webView: {
+                        width: '100%',
+                        height: '100%',
+                    },
+                },
+                
+            ]}
+                originWhitelist={['*']}
+                source={{ html: formatHtml() }}
+            />
         <View style={styles.joystick}>
           <JoystickPad/>
                 
@@ -75,5 +105,12 @@ const styles = StyleSheet.create({
     bottom: 20,
     right: 20,
   },
-
+webView: {
+    width: '100%',
+    height: '100%',
+},
+cameraPlaceholder: {
+    
+   
+},
 });
