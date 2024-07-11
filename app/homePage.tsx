@@ -23,7 +23,7 @@ export default function HomePage() {
 
     const handleMoreInfo = () => {
         console.log("Button More Info")
-        navigation.navigate('MoreInfo');
+        navigation.navigate('MoreInfo', {vehicleIP});
      }
 
      const handleDriveManually = () => {
