@@ -18,7 +18,7 @@ export type RootStackParamList = {
   HomePage: { vehicleIP: string };
   AutoDrive: undefined;
   DriveManually: undefined;
-  MoreInfo: undefined;
+  MoreInfo: { vehicleIP: string };
   Setting: { vehicleIP: string };
   VehicleData: undefined;
   SessionLog: undefined;
