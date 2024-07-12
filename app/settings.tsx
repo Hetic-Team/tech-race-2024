@@ -102,7 +102,6 @@ export default function Setting() {
                     <IconLogout color="red" size={20}/>
                 </TouchableOpacity>
             </View>
-
         </View>
     );
 };
