@@ -28,7 +28,7 @@ export default function MoreInfo() {
 
     const handleVehicleData = () => {
         console.log("Button Vehicle Data")
-        navigation.navigate('VehicleData');
+        navigation.navigate('VehicleData', { vehicleIP });
     }
 
     const handleSessionLog = () => {
